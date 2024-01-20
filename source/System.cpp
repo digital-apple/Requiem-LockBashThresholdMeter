@@ -150,15 +150,15 @@ bool System::ReferenceHasScript(RE::TESObjectREFR* a_reference)
     logs::info("System::ReferenceHasScript :: Looking for script: '{}' on reference: '{}' | '0x{:x}'", script, a_reference->GetName(), a_reference->GetFormID());
 
     using VM = RE::BSScript::Internal::VirtualMachine;
-	using ObjectPtr = RE::BSTSmartPointer<RE::BSScript::Object>;
+    using ObjectPtr = RE::BSTSmartPointer<RE::BSScript::Object>;
 
-	auto vm = VM::GetSingleton();
-	auto policy = vm->GetObjectHandlePolicy();
-	RE::VMHandle handle = policy->GetHandleForObject(a_reference->GetFormType(), a_reference);
+    auto vm = VM::GetSingleton();
+    auto policy = vm->GetObjectHandlePolicy();
+    RE::VMHandle handle = policy->GetHandleForObject(a_reference->GetFormType(), a_reference);
     std::string name = script;
-	ObjectPtr object = nullptr;
+    ObjectPtr object = nullptr;
 
-	return vm->FindBoundObject(handle, name.c_str(), object);
+    return vm->FindBoundObject(handle, name.c_str(), object);
 }
 
 auto System::RGBToHex(std::int16_t a_red, std::int16_t a_green, std::int16_t a_blue) -> std::uint32_t
