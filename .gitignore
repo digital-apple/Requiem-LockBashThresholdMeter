@@ -1,0 +1,16 @@
+# dot folders
+.cache/
+.vs/
+.vscode/
+.xmake/
+
+# folders
+build/
+vs*/
+interface/*.html
+interface/*.fla
+interface/*.swf
+
+# files
+*.zip
+compile_commands.json
