@@ -14,7 +14,7 @@ xmake build
 
 ## Special Credits
 
-asrak [[Nexus](https://www.nexusmods.com/skyrimspecialedition/users/209004)/[GitHub](https://github.com/MaybeAsrak/)] for all the help regarding color gradients and linear interpolation.
+Asrak [[Nexus](https://www.nexusmods.com/skyrimspecialedition/users/209004)/[GitHub](https://github.com/MaybeAsrak/)] for all the patience and help regarding color gradients and linear interpolation.
 
 [danielaparker](https://github.com/danielaparker) for [jsoncons](https://github.com/danielaparker/jsoncons).
 

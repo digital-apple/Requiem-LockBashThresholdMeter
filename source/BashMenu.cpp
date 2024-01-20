@@ -91,21 +91,24 @@ void BashMenu::Update()
             if (target->IsLocked() && !target->IsActivationBlocked()) {
                 const auto lock = target->GetLockLevel();
 
-                _root.Invoke("ApplyLayout", system->GetLayout());
+                if (lock == RE::LOCK_LEVEL::kVeryEasy || lock == RE::LOCK_LEVEL::kEasy || lock == RE::LOCK_LEVEL::kAverage) {
+                    _root.Invoke("ApplyLayout", system->GetLayout());
 
-                std::array<RE::GFxValue, 1> percentage{ system->GetMeterPercentage(lock) };
-                _root.Invoke("SetMeterPercentage", percentage);
+                    std::array<RE::GFxValue, 1> percentage{ system->GetMeterPercentage(lock) };
+                    _root.Invoke("SetMeterPercentage", percentage);
 
-                std::array<RE::GFxValue, 3> strength{ system->GetCounter(), static_cast<std::uint32_t>(system->GetPlayerStrength(false)), system->GetLockThreshold(lock) };
-                _root.Invoke("UpdateCounter", strength);
+                    std::array<RE::GFxValue, 3> strength{ system->GetCounter(), static_cast<std::uint32_t>(system->GetPlayerStrength(false)), system->GetLockThreshold(lock) };
+                    _root.Invoke("UpdateCounter", strength);
 
-                std::array<RE::GFxValue, 1> color{ system->GetColor(lock) };
-                _root.Invoke("UpdateColor", color);
+                    std::array<RE::GFxValue, 1> color{ system->GetColor(lock) };
+                    _root.Invoke("UpdateColor", color);
 
-                if (system->GetColor(lock) == system->GetColorByType(System::COLOR_TYPE::Ready)) {
-                    _root.Invoke("FlashMeter");
+                    if (system->GetColor(lock) == system->GetColorByType(System::COLOR_TYPE::Ready)) {
+                        _root.Invoke("FlashMeter");
+                    }
+
+                    _root.Invoke("Show");
                 }
-                _root.Invoke("Show");
             } else {
                 const auto player = RE::PlayerCharacter::GetSingleton();
 
