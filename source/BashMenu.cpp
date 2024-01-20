@@ -1,5 +1,4 @@
 #include "BashMenu.h"
-#include "RE/P/PlayerCharacter.h"
 #include "System.h"
 
 BashMenu::BashMenu()
