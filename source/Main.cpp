@@ -35,12 +35,6 @@ void InitMessaging()
 			System::GetSingleton()->ParseJson();
 			Events::GetSingleton()->Register();
 			break;
-		case SKSE::MessagingInterface::kNewGame:
-			BashMenu::Show();
-			break;
-		case SKSE::MessagingInterface::kPostLoadGame:
-			BashMenu::Show();
-			break;
 		}
 		})) {
 		stl::report_and_fail("Failed to initialize message listener.");

@@ -6,7 +6,7 @@ private:
     using Super = RE::IMenu;
 public:
     constexpr static std::string_view MENU_NAME {"BashMenu"};
-    constexpr static std::string_view MENU_PATH {"Requiem - Lock Bash Threshold Meter/BashMenu"}; // Change path
+    constexpr static std::string_view MENU_PATH {"Requiem - Lock Bash Threshold Meter/BashMenu"};
 
     BashMenu();
 
@@ -14,12 +14,11 @@ public:
 
     void AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;
 
-    static void Hide();
     static void SetVisibility(bool a_visible);
     static void Show();
     void Update();
     
-    static auto Creator() -> RE::stl::owner<RE::IMenu*> { return new BashMenu(); }
+    static auto Creator() -> RE::IMenu* { return new BashMenu(); }
 private:
     class Logger : public RE::GFxLog
     {

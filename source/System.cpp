@@ -147,8 +147,6 @@ bool System::GetCounter()
 
 bool System::ReferenceHasScript(RE::TESObjectREFR* a_reference)
 {
-    logs::info("System::ReferenceHasScript :: Looking for script: '{}' on reference: '{}' | '0x{:x}'", script, a_reference->GetName(), a_reference->GetFormID());
-
     using VM = RE::BSScript::Internal::VirtualMachine;
     using ObjectPtr = RE::BSTSmartPointer<RE::BSScript::Object>;
 

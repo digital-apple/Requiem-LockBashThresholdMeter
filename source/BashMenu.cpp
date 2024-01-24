@@ -1,7 +1,7 @@
 #include "BashMenu.h"
 #include "System.h"
 
-BashMenu::BashMenu()
+BashMenu::BashMenu() : Super()
 {
     logs::info("BashMenu :: Creation started!");
     auto menu = static_cast<Super*>(this);
@@ -36,9 +36,11 @@ void BashMenu::Register()
     const auto ui = RE::UI::GetSingleton();
 
     if (ui) {
-        ui->Register(MENU_NAME, Creator);
+        ui->Register(BashMenu::MENU_NAME, BashMenu::Creator);
 
         logs::info("Menu::Register :: Registered menu: '{}' on path: '{}'.", MENU_NAME, MENU_PATH);
+
+        BashMenu::Show();
     }
 }
 
@@ -46,15 +48,6 @@ void BashMenu::AdvanceMovie(float a_interval, std::uint32_t a_currentTime)
 {
     BashMenu::Update();
     RE::IMenu::AdvanceMovie(a_interval, a_currentTime);
-}
-
-void BashMenu::Hide()
-{
-    const auto queue = RE::UIMessageQueue::GetSingleton();
-
-    if (queue) {
-        queue->AddMessage(BashMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
-    }
 }
 
 void BashMenu::SetVisibility(bool a_visible)
