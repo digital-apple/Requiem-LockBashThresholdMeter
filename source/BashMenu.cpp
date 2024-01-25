@@ -1,7 +1,7 @@
 #include "BashMenu.h"
 #include "System.h"
 
-BashMenu::BashMenu() : Super()
+BashMenu::BashMenu()
 {
     logs::info("BashMenu :: Creation started!");
     auto menu = static_cast<Super*>(this);
@@ -66,9 +66,12 @@ void BashMenu::SetVisibility(bool a_visible)
 void BashMenu::Show()
 {
     const auto queue = RE::UIMessageQueue::GetSingleton();
+    const auto ui = RE::UI::GetSingleton();
 
-    if (queue) {
-        queue->AddMessage(BashMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kShow, nullptr);
+    if (queue && ui) {
+        if (!ui->IsMenuOpen(BashMenu::MENU_NAME)) {
+            queue->AddMessage(BashMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kShow, nullptr);
+        }
     }
 }
 
