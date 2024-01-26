@@ -1,4 +1,4 @@
-# Bounty Quests Redone - NG
+# Requiem - Lock Bash Threshold Meter
 
 * [Nexus Page](https://www.nexusmods.com/skyrimspecialedition/mods/109661)
 
