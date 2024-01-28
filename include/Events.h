@@ -1,6 +1,6 @@
 #pragma once
 
-class Events final : public RE::BSTEventSink<RE::MenuOpenCloseEvent>, public RE::BSTEventSink<RE::TESActorLocationChangeEvent>
+class Events final : public RE::BSTEventSink<RE::MenuOpenCloseEvent>
 {
 public:
     using CONTEXT = RE::UserEvents::INPUT_CONTEXT_ID;
@@ -9,5 +9,4 @@ public:
     static void Register();
 private:
     auto ProcessEvent(const RE::MenuOpenCloseEvent* a_event, RE::BSTEventSource<RE::MenuOpenCloseEvent>*) -> RE::BSEventNotifyControl override;
-    auto ProcessEvent(const RE::TESActorLocationChangeEvent* a_event, RE::BSTEventSource<RE::TESActorLocationChangeEvent>*) -> RE::BSEventNotifyControl override;
 };

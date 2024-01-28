@@ -14,18 +14,36 @@ void Events::Register()
 
         logs::info("Events :: Registered for MenuOpenCloseEvent.");
     }
-
-    if (const auto events = RE::ScriptEventSourceHolder::GetSingleton()) {
-        events->GetEventSource<RE::TESActorLocationChangeEvent>()->AddEventSink(GetSingleton());
-
-        logs::info("Events:: Registered for TESActorLocationChangeEvent.");
-    }
 }
 
 auto Events::ProcessEvent(const RE::MenuOpenCloseEvent* a_event, RE::BSTEventSource<RE::MenuOpenCloseEvent>*) -> RE::BSEventNotifyControl
 {
     if (!a_event) {
         return RE::BSEventNotifyControl::kContinue;
+    }
+
+    if (a_event->menuName == RE::HUDMenu::MENU_NAME) {
+        if (a_event->opening) {
+            BashMenu::Show();
+        } else {
+            BashMenu::Hide();
+        }
+    } else if (a_event->menuName == RE::RaceSexMenu::MENU_NAME && !a_event->opening) {
+        BashMenu::Show();
+        } else if (a_event->menuName == RE::LoadingMenu::MENU_NAME && !a_event->opening) {
+        BashMenu::Show();
+    }
+
+    if (a_event->menuName == RE::ContainerMenu::MENU_NAME && a_event->opening){
+        BashMenu::Hide();
+    }
+
+    if (a_event->menuName == RE::ContainerMenu::MENU_NAME && !a_event->opening) {
+        const auto ui = RE::UI::GetSingleton();
+        
+        if (ui && !ui->IsMenuOpen("PluginExplorerMenu")) {
+            BashMenu::Show();
+        }    
     }
 
     const auto controls = RE::ControlMap::GetSingleton();
@@ -39,17 +57,6 @@ auto Events::ProcessEvent(const RE::MenuOpenCloseEvent* a_event, RE::BSTEventSou
             BashMenu::SetVisibility(true);
         }
     }
-
-    return RE::BSEventNotifyControl::kContinue;
-}
-
-auto Events::ProcessEvent(const RE::TESActorLocationChangeEvent* a_event, RE::BSTEventSource<RE::TESActorLocationChangeEvent>*) -> RE::BSEventNotifyControl
-{
-    if (!a_event) {
-        return RE::BSEventNotifyControl::kContinue;
-    }
-
-    BashMenu::Show();
 
     return RE::BSEventNotifyControl::kContinue;
 }

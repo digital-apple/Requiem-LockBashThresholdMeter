@@ -4,8 +4,8 @@
 BashMenu::BashMenu()
 {
     logs::info("BashMenu :: Creation started!");
-    auto menu = static_cast<Super*>(this);
 
+    const auto menu = static_cast<Super*>(this);
     const auto scaleform = RE::BSScaleformManager::GetSingleton();
 
     menu->inputContext = Context::kNone;
@@ -14,6 +14,10 @@ BashMenu::BashMenu()
     menu->menuFlags.set(RE::UI_MENU_FLAGS::kAlwaysOpen);
     menu->menuFlags.set(RE::UI_MENU_FLAGS::kAllowSaving);
     menu->menuFlags.set(RE::UI_MENU_FLAGS::kRequiresUpdate);
+
+    if (uiMovie) {
+        uiMovie->SetMouseCursorCount(0);
+    }
 
     scaleform->LoadMovieEx(menu, MENU_PATH, [](RE::GFxMovieDef* a_def) -> void {
         a_def->SetState(RE::GFxState::StateType::kLog,
@@ -66,12 +70,18 @@ void BashMenu::SetVisibility(bool a_visible)
 void BashMenu::Show()
 {
     const auto queue = RE::UIMessageQueue::GetSingleton();
-    const auto ui = RE::UI::GetSingleton();
 
-    if (queue && ui) {
-        if (!ui->IsMenuOpen(BashMenu::MENU_NAME)) {
-            queue->AddMessage(BashMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kShow, nullptr);
-        }
+    if (queue) {
+        queue->AddMessage(BashMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kShow, nullptr);
+    }
+}
+
+void BashMenu::Hide()
+{
+    const auto queue = RE::UIMessageQueue::GetSingleton();
+
+    if (queue) {
+        queue->AddMessage(BashMenu::MENU_NAME, RE::UI_MESSAGE_TYPE::kHide, nullptr);
     }
 }
 

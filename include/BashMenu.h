@@ -16,6 +16,7 @@ public:
 
     static void SetVisibility(bool a_visible);
     static void Show();
+    static void Hide();
     void Update();
     
     static auto Creator() -> RE::IMenu* { return new BashMenu(); }
