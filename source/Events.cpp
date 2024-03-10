@@ -22,34 +22,14 @@ auto Events::ProcessEvent(const RE::MenuOpenCloseEvent* a_event, RE::BSTEventSou
         return RE::BSEventNotifyControl::kContinue;
     }
 
-    if (a_event->menuName == RE::HUDMenu::MENU_NAME) {
-        if (a_event->opening) {
-            BashMenu::Show();
-        } else {
-            BashMenu::Hide();
-        }
-    } else if (a_event->menuName == RE::RaceSexMenu::MENU_NAME && !a_event->opening) {
+    if (a_event->menuName == RE::LoadingMenu::MENU_NAME && !a_event->opening) {
         BashMenu::Show();
-        } else if (a_event->menuName == RE::LoadingMenu::MENU_NAME && !a_event->opening) {
-        BashMenu::Show();
-    }
-
-    if (a_event->menuName == RE::ContainerMenu::MENU_NAME && a_event->opening){
-        BashMenu::Hide();
-    }
-
-    if (a_event->menuName == RE::ContainerMenu::MENU_NAME && !a_event->opening) {
-        const auto ui = RE::UI::GetSingleton();
-        
-        if (ui && !ui->IsMenuOpen("PluginExplorerMenu")) {
-            BashMenu::Show();
-        }    
     }
 
     const auto controls = RE::ControlMap::GetSingleton();
 
     if (controls) {
-        const auto& stack = controls->contextPriorityStack;
+        const auto stack = (REL::Module::IsAE() && REL::Module::get().version().patch() >= 1130) ? *REL::Relocation<RE::BSTArray<CONTEXT>*>(reinterpret_cast<std::uintptr_t>(controls) + 0x108).get() : controls->contextPriorityStack;
 
         if (stack.empty() || (stack.back() != CONTEXT::kGameplay && stack.back() != CONTEXT::kFavorites)) {
             BashMenu::SetVisibility(false);
